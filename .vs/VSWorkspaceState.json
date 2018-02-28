@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\public",
+    "\\src",
+    "\\src\\components",
+    "\\src\\components\\App",
+    "\\src\\components\\Playlist",
+    "\\src\\components\\SearchBar",
+    "\\src\\components\\SearchResults",
+    "\\src\\components\\Track",
+    "\\src\\components\\TrackList"
+  ],
+  "SelectedNode": "\\src\\components\\SearchResults\\SearchResults.js",
+  "PreviewInSolutionExplorer": false
+}
