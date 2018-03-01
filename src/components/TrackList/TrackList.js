@@ -2,12 +2,12 @@ import React from 'react';
 import './TrackList.css';
 import { Track } from "../Track/Track";
 
-export const TrackList = ({ tracks }) => (
+export class TrackList extends React.Component {
+    render() {
+        return (
             <div className="TrackList">
-                {
-                    tracks.map(track =>
-                        <Track key={track.id} track = {track}/>
-                    )
-                }
+                {this.props.tracks.map(track => <Track track={track} key={track.id}/>)}
             </div>
         );
+    }
+}
