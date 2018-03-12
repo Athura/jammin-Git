@@ -10,7 +10,7 @@ class App extends Component {
         super(props);
         this.state = {
             searchResults: [],
-            playlistName: 'New Playlist',
+            playlistName: '',
             playlistTracks: [],
         };
 
@@ -23,21 +23,21 @@ class App extends Component {
 
     addTrack(track){
         let tracks = this.state.playlistTracks;
-        let x = tracks.find(a => a.name === track.name);
-        if(!x){
+        if(!tracks.find(a => a.id === track.id)){
             tracks.push(track);
             this.setState({
-                playlistTrack: track
+                playlistTracks: tracks
             });
         }
     }
 
     removeTrack(track){
         let tracks = this.state.playlistTracks;
-        let x = tracks.filter(a => a.name === track.name);
-        this.setState({
-            playlistTrack: track
-        });
+        if(tracks.filter(x => x.name === track.name)) {
+            this.setState({
+                playlistTracks: tracks
+            });
+        }
     }
 
     updatePlaylistName(name){
@@ -49,13 +49,15 @@ class App extends Component {
     savePlaylist(){
         let tracks = this.state.playlistTracks;
         if(tracks.length && this.state.playlistName){
-            let tracksURIs = tracks.map( x => x.uri);
-            Spotify.savePlaylist(this.state.playlistName, tracksURIs).then(() => {
+            let tracksURIs = [];
+            for(let i = 0; i <this.state.playlistTracks.length; i++){
+                tracksURIs.push(this.state.playlistTracks[i].uri);
+            }
+            Spotify.savePlaylist(this.state.playlistName, tracksURIs).then( () => {
                 this.setState({
-                    playlistName: 'New Playlist',
-                    playlistTracks: []
+                    playlistName: this.state.playlistName,
+                    playlistTracks: tracks
                 });
-                document.getElementById('Playlist-name').value = this.state.playlistName;
             });
         }
     }
@@ -73,8 +75,15 @@ class App extends Component {
                 <div className="App">
                     <SearchBar onSearch={this.search}/>
                     <div className="App-playlist">
-                        <SearchResults searchResults = {this.state.searchResults}  onAdd = {this.addTrack}/>
-                        <Playlist playlistName = {this.state.playlistName} playlistTracks = {this.state.playlistTracks} onRemove={this.removeTrack} onNameChange ={this.updatePlaylistName} onSave ={this.savePlaylist}/>
+                        <SearchResults searchResults = {this.state.searchResults}
+                                       onAdd = {this.addTrack}
+                                       />
+                        <Playlist
+                            playlistName = {this.state.playlistName}
+                            playlistTracks = {this.state.playlistTracks}
+                            onRemove={this.removeTrack}
+                            onNameChange ={this.updatePlaylistName}
+                            onSave ={this.savePlaylist}/>
                     </div>
                 </div>
             </div>
