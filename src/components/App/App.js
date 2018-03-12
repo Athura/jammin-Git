@@ -31,13 +31,18 @@ class App extends Component {
         }
     }
 
-    removeTrack(track){
-        let tracks = this.state.playlistTracks;
-        if(tracks.filter(x => x.name === track.name)) {
-            this.setState({
-                playlistTracks: tracks
-            });
+    removeTrack(track) {
+        const id = this.state.playlistTracks[track];
+        const findId = this.state.playlistTracks.filter(track => track.id === id);
+        if (findId.length===1) {
+            const searchArray = this.state.searchResults;
+            const trackIndex = this.state.searchResults.findIndex(track => track.id === id);
+            searchArray[trackIndex].added = '';
+        } else {
+            console.log('Nothing was found, sorry!');
         }
+        this.state.playlistTracks.splice(track,1);
+        this.setState({ playlistTracks: this.state.playlistTracks });
     }
 
     updatePlaylistName(name){
