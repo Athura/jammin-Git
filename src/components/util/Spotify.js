@@ -1,7 +1,7 @@
 let my_user_token = '6d0d5b6d2a9b405c900e34fed6b5a255';
 let url = 'https://accounts.spotify.com/authorize';
 let scope = 'playlist-modify-public';
-let redirectUri = "http://localhost:3000/";
+let redirectUri = "jamminlite.surge.sh";
 let accessToken;
 
 export const Spotify = {
